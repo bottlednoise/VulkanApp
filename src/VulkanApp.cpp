@@ -8,6 +8,9 @@
  * (c) 2019 Julio Martinez
  */
 
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
+
 #include "VulkanApp/VulkanApp.hpp"
 
 /* -------------------------------------------------------------------------- */
@@ -16,7 +19,6 @@
  */
 VulkanApp::VulkanApp::VulkanApp()
 {
-	exitCode = 0;
 }
 
 
@@ -39,5 +41,49 @@ bool VulkanApp::VulkanApp::OnInit()
  */
 int32_t VulkanApp::VulkanApp::Run()
 {
+	exitCode = 0;
+
+	if (!Initialize())
+		return -1;
+
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
+	}
+
 	return exitCode;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*!
+ * Internal method that will initialize GLFW and Vulkan systems.
+ */
+bool VulkanApp::VulkanApp::Initialize()
+{
+	if (OnInit())
+	{
+		if (glfwInit() != GLFW_TRUE)
+			return false;
+
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+		window = glfwCreateWindow(windowWidth, windowHeight, windowName ? windowName : "VulkanApp", nullptr, nullptr);
+		
+		glfwSetWindowUserPointer(window, this);
+		glfwSetFramebufferSizeCallback(window, FrameBufferResizeCB);
+	}
+
+	return true;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*!
+ * Callback that will be invoked when the size of the window changes.
+ */
+void VulkanApp::VulkanApp::FrameBufferResizeCB(GLFWwindow* window, int width, int height)
+{
+	auto app = reinterpret_cast<VulkanApp*>(glfwGetWindowUserPointer(window));
+	app->framebufferResized = true;
 }

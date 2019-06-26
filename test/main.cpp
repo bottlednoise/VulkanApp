@@ -8,14 +8,13 @@
  * (c) 2019 Julio Martinez
  */
 
-
-#include "VulkanApp/VulkanApp.hpp"
-
-
 #ifdef _WIN32
 #include <Windows.h>
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif // _WIN32
+
+
+#include "TestApp.hpp"
 
 
 /* -------------------------------------------------------------------------- */
@@ -24,7 +23,7 @@
  */
 int main()
 {
-	VulkanApp::VulkanApp app;
+	TestApp app;
 
 	return static_cast<int>(app.Run());
 }
