@@ -1,0 +1,11 @@
+# Visual Studio folders and files
+.vs
+*.user
+*.idb
+*.lib
+*.tlog
+*.log
+*.obj
+*.pdb
+*.ilk
+*.exe

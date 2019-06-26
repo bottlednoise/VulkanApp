@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanApp", "VulkanApp.vcxproj", "{C05FA3A7-B15E-4451-9D71-907935D568B1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanAppTest", "VulkanAppTest.vcxproj", "{79874939-E73E-47F2-AA63-3C7A4EE936E7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C05FA3A7-B15E-4451-9D71-907935D568B1} = {C05FA3A7-B15E-4451-9D71-907935D568B1}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C05FA3A7-B15E-4451-9D71-907935D568B1}.Debug|x64.ActiveCfg = Debug|x64
+		{C05FA3A7-B15E-4451-9D71-907935D568B1}.Debug|x64.Build.0 = Debug|x64
+		{C05FA3A7-B15E-4451-9D71-907935D568B1}.Release|x64.ActiveCfg = Release|x64
+		{C05FA3A7-B15E-4451-9D71-907935D568B1}.Release|x64.Build.0 = Release|x64
+		{79874939-E73E-47F2-AA63-3C7A4EE936E7}.Debug|x64.ActiveCfg = Debug|x64
+		{79874939-E73E-47F2-AA63-3C7A4EE936E7}.Debug|x64.Build.0 = Debug|x64
+		{79874939-E73E-47F2-AA63-3C7A4EE936E7}.Release|x64.ActiveCfg = Release|x64
+		{79874939-E73E-47F2-AA63-3C7A4EE936E7}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E86E6B9-DC0A-49E1-8E81-B5A15CF69210}
+	EndGlobalSection
+EndGlobal
