@@ -11,6 +11,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 
 namespace VulkanApp
@@ -56,18 +57,25 @@ namespace VulkanApp
 			return windowHeight;
 		}
 
+		//! Method to set the application name.
+		void SetApplicationName(const std::string name)
+		{
+			applicationName = name;
+		}
+
 		//! Function to set the caption of the window.
-		void SetWindowCaption(const char* caption);
+		void SetWindowCaption(const std::string caption);
 
 	protected:
 		virtual bool OnInit();
 
 	private:
+		std::string applicationName;				//!< Application name.
 		struct GLFWwindow* window = nullptr;		//!< GLFW window handler.
 		class VulkanDrv* vulkanDrv = nullptr;		//!< Vulkan driver object.
 		int32_t windowWidth = 800;					//!< Width of the window.
 		int32_t windowHeight = 600;					//!< Height of the window.
-		char* windowCaption = nullptr;				//!< Name of the window.
+		std::string windowCaption;					//!< Name of the window.
 		int32_t exitCode = 0;						//!< Exit code for the application.
 		bool framebufferResized = false;			//!< Flag to check if the window has been resized.
 

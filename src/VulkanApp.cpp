@@ -46,12 +46,6 @@ VulkanApp::VulkanApp::~VulkanApp()
 	}
 
 	glfwTerminate();
-
-	if (windowCaption)
-	{
-		delete[] windowCaption;
-		windowCaption = nullptr;
-	}
 }
 
 
@@ -118,7 +112,7 @@ bool VulkanApp::VulkanApp::InitializeGLFW()
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-	window = glfwCreateWindow(windowWidth, windowHeight, windowCaption ? windowCaption : "VulkanApp", nullptr, nullptr);
+	window = glfwCreateWindow(windowWidth, windowHeight, windowCaption.c_str(), nullptr, nullptr);
 
 	glfwSetWindowUserPointer(window, this);
 	glfwSetFramebufferSizeCallback(window, FrameBufferResizeCB);
@@ -134,7 +128,7 @@ bool VulkanApp::VulkanApp::InitializeGLFW()
  */
 bool VulkanApp::VulkanApp::InitializeVulkan()
 {
-	bool result = vulkanDrv->Initialize();
+	bool result = vulkanDrv->Initialize(applicationName.c_str());
 
 	return result;
 }
@@ -155,21 +149,10 @@ void VulkanApp::VulkanApp::FrameBufferResizeCB(GLFWwindow* window, int width, in
 /*!
  * \param caption New caption for the window.
  */
-void VulkanApp::VulkanApp::SetWindowCaption(const char* caption)
+void VulkanApp::VulkanApp::SetWindowCaption(const std::string caption)
 {
-	if (windowCaption)
-	{
-		delete[] windowCaption;
-		windowCaption = nullptr;
-	}
-
-	if (caption)
-	{
-		size_t l = strlen(caption) + 1;
-		windowCaption = new char[l];
-		memcpy(windowCaption, caption, l);
-	}
+	windowCaption = caption;
 
 	if (window != nullptr)
-		glfwSetWindowTitle(window, windowCaption);
+		glfwSetWindowTitle(window, windowCaption.c_str());
 }

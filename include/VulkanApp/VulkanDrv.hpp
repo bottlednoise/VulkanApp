@@ -14,13 +14,17 @@ namespace VulkanApp
 		~VulkanDrv();
 
 		//! Initialization function.
-		bool Initialize();
+		bool Initialize(const char* applicationName);
 
 	private:
-		std::vector<const char*> validationLayers; //!< Validation layers to set.
+		VkInstance vkInstance;						//!< Vulkan instance.
+		std::vector<const char*> validationLayers;	//!< Validation layers to set.
 		bool enableValidationLayers = false;		//!< Enable validation layers flag.
 
 		//! Method that checks for the existence of validation layers.
 		bool CheckValidationLayersSupport();
+
+		//! Method used to enumerate the required extensions.
+		std::vector<const char*> GetRequiredExtensions();
 	};
 }

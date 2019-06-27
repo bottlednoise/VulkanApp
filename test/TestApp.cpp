@@ -15,6 +15,7 @@ bool TestApp::OnInit()
 {
 	SetWindowSize(640, 480);
 	SetWindowCaption("VulkanApp Test");
+	SetApplicationName("VulkanApp Test");
 
 	return true;
 }
