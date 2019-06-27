@@ -31,7 +31,7 @@ namespace VulkanApp
 		 * \param width width of the window.
 		 * \param height height of the window.
 		 */
-		inline void SetWindowSize(int32_t width, int32_t height)
+		void SetWindowSize(int32_t width, int32_t height)
 		{
 			windowWidth = width;
 			windowHeight = height;
@@ -42,7 +42,7 @@ namespace VulkanApp
 		/*!
 		 * \return window's width.
 		 */
-		inline int32_t GetWindowWidth()
+		[[nodiscard]] int32_t GetWindowWidth() const
 		{
 			return windowWidth;
 		}
@@ -51,7 +51,7 @@ namespace VulkanApp
 		/*!
 		 * \return window's height.
 		 */
-		inline int32_t GetWindowHeight()
+		[[nodiscard]] int32_t GetWindowHeight() const
 		{
 			return windowHeight;
 		}
