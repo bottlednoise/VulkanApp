@@ -10,9 +10,15 @@
     <ClCompile Include="..\..\src\VulkanApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\VulkanDrv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\VulkanApp\VulkanApp.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\VulkanApp\VulkanDrv.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

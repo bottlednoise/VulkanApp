@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\VulkanApp.cpp" />
+    <ClCompile Include="..\..\src\VulkanDrv.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\VulkanApp\VulkanApp.hpp" />
+    <ClInclude Include="..\..\include\VulkanApp\VulkanDrv.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

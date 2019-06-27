@@ -12,6 +12,7 @@
 
 #include <cstdint>
 
+
 namespace VulkanApp
 {
 	class VulkanApp
@@ -19,6 +20,8 @@ namespace VulkanApp
 	public:
 		//! Default constructor.
 		VulkanApp();
+
+		virtual ~VulkanApp();
 
 		//! Method tha executes the application.
 		int32_t Run();
@@ -53,19 +56,29 @@ namespace VulkanApp
 			return windowHeight;
 		}
 
+		//! Function to set the caption of the window.
+		void SetWindowCaption(const char* caption);
+
 	protected:
 		virtual bool OnInit();
 
 	private:
-		struct GLFWwindow* window;					//!< GLFW window handler.
+		struct GLFWwindow* window = nullptr;		//!< GLFW window handler.
+		class VulkanDrv* vulkanDrv = nullptr;		//!< Vulkan driver object.
 		int32_t windowWidth = 800;					//!< Width of the window.
 		int32_t windowHeight = 600;					//!< Height of the window.
-		char* windowName = nullptr;					//!< Name of the window.
+		char* windowCaption = nullptr;				//!< Name of the window.
 		int32_t exitCode = 0;						//!< Exit code for the application.
 		bool framebufferResized = false;			//!< Flag to check if the window has been resized.
 
 		//! Vulkan internal initialization.
 		bool Initialize();
+
+		//! Initialize glfw system.
+		bool InitializeGLFW();
+
+		//! Vulkan initialization method.
+		bool InitializeVulkan();
 
 		//! Window resize callback.
 		static void FrameBufferResizeCB(struct GLFWwindow* window, int width, int height);

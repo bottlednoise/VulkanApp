@@ -8,10 +8,14 @@
  * (c) 2019 Julio Martinez
  */
 
+#include <string.h>
+
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include "VulkanApp/VulkanApp.hpp"
+#include "VulkanApp/VulkanDrv.hpp"
+
 
 /* -------------------------------------------------------------------------- */
 /*!
@@ -19,12 +23,41 @@
  */
 VulkanApp::VulkanApp::VulkanApp()
 {
+	vulkanDrv = new VulkanDrv();
 }
 
 
 /* -------------------------------------------------------------------------- */
 /*!
- * This is a virual method that applications should override to initialize the
+ * Releases the resources allocated by the application.
+ */
+VulkanApp::VulkanApp::~VulkanApp()
+{
+	if (vulkanDrv)
+	{
+		delete vulkanDrv;
+		vulkanDrv = nullptr;
+	}
+
+	if (window)
+	{
+		glfwDestroyWindow(window);
+		window = nullptr;
+	}
+
+	glfwTerminate();
+
+	if (windowCaption)
+	{
+		delete[] windowCaption;
+		windowCaption = nullptr;
+	}
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*!
+ * This is a virtual method that applications should override to initialize the
  * application.
  * \returns true if successful and false otherwise.
  */
@@ -61,20 +94,49 @@ int32_t VulkanApp::VulkanApp::Run()
  */
 bool VulkanApp::VulkanApp::Initialize()
 {
+	bool result = true;
+
 	if (OnInit())
 	{
-		if (glfwInit() != GLFW_TRUE)
-			return false;
-
-		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-
-		window = glfwCreateWindow(windowWidth, windowHeight, windowName ? windowName : "VulkanApp", nullptr, nullptr);
-		
-		glfwSetWindowUserPointer(window, this);
-		glfwSetFramebufferSizeCallback(window, FrameBufferResizeCB);
+		result = InitializeGLFW();
+		result |= InitializeVulkan();
 	}
 
+	return result;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*!
+ * Initialization part for GLFW.
+ * \return true in case of success or false on error.
+ */
+bool VulkanApp::VulkanApp::InitializeGLFW()
+{
+	if (glfwInit() != GLFW_TRUE)
+		return false;
+
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+	window = glfwCreateWindow(windowWidth, windowHeight, windowCaption ? windowCaption : "VulkanApp", nullptr, nullptr);
+
+	glfwSetWindowUserPointer(window, this);
+	glfwSetFramebufferSizeCallback(window, FrameBufferResizeCB);
+
 	return true;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*!
+ * Initialization part for GLFW.
+ * \return true in case of success or false on error.
+ */
+bool VulkanApp::VulkanApp::InitializeVulkan()
+{
+	bool result = vulkanDrv->Initialize();
+
+	return result;
 }
 
 
@@ -86,4 +148,28 @@ void VulkanApp::VulkanApp::FrameBufferResizeCB(GLFWwindow* window, int width, in
 {
 	auto app = reinterpret_cast<VulkanApp*>(glfwGetWindowUserPointer(window));
 	app->framebufferResized = true;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*!
+ * \param caption New caption for the window.
+ */
+void VulkanApp::VulkanApp::SetWindowCaption(const char* caption)
+{
+	if (windowCaption)
+	{
+		delete[] windowCaption;
+		windowCaption = nullptr;
+	}
+
+	if (caption)
+	{
+		size_t l = strlen(caption) + 1;
+		windowCaption = new char[l];
+		memcpy(windowCaption, caption, l);
+	}
+
+	if (window != nullptr)
+		glfwSetWindowTitle(window, windowCaption);
 }
